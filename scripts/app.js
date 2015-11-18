@@ -67,9 +67,9 @@ function loadPartials() {
       <nav class="top-bar" data-topbar role="navigation"> \
         <ul class="title-area"> \
           <li class="name"> \
-            <h1><a href="index.html">Tea Tracker</a></h1> \
+            <h1><a href="teatracker.html">Tea Tracker</a></h1> \
           </li> \
-          <li class="toggle-topbar menu-icon"><a href="index.html"><span></span></a></li> \
+          <li class="toggle-topbar menu-icon"><a href="timeline.html"><span></span></a></li> \
         </ul> \
         <section class="top-bar-section"> \
           <ul class="right"> \

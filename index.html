@@ -14,59 +14,66 @@
 </head>
 
 <body>
-<script id="home-template" type="text/x-handlebars-template">
-  {{> nav}}
-  {{> add}}
-
-  <div id="reviews">
-    <div class="row">
-      <div class="large-12 medium-10 medium-centered spaced columns">
-        <div class="row">
-          <h2 class="home-headers">Recent Activity</h2>
-          <hr>
-        </div>
-        {{#each friends}}
-        <div class="row">
-          <div class="medium-2 small-3 columns">
-            <a href="profile.html#{{user}}">
-              <img class="img-circle" src="img/{{imgHelper user}}.jpg">
-            </a>
+  <script id="tea-template" type="text/x-handlebars-template">
+    <div class="top-space"></div>
+    <div class="large-6 columns">
+      <div class="row">
+        <div class="large-6 large-offset-3 columns">
+          <h1 class="spaced centered">TeaTracker</h1>
+          <h4 class="spaced centered">This is where the tagline goes!</h4>
+          <div class="large-12 medium-8 large-offset-0 medium-offset-2 spaced columns">
+            <a class="button expand">Register With Facebook</a>
           </div>
-          <div class="small-9 medium-offset-1 columns">
-            <div class="row">
-              <div class="info small-12 columns">
-                <a href="profile.html#{{user}}">{{user}}</a> drank a cup of {{tea}}<br>
-              </div>
-            </div>
-            <div class="row">
-              <div class="small-6 columns">
-                <span>{{starHelper rate}}</span>
-              </div>
-              <div class="small-6 columns">
-                <br>
-                <plabel class="e-right">{{timeHelper timestamp}}</plabel>
-              </div>
-            </div>
-            <div class="row review centered">
-              <h5 class="heavy">
-                <a id={{id}} class="review-button">Read Review <img class="{{id}} img-arrow" src="img/arrowdown.svg"><img class="{{id}} img-arrow" style="display:none"src="img/arrowup.svg"></a>
-              </h5>
-              <p class="rev-text {{id}}" style="display:none">{{revHelper review}}</p>
-            </div>
+          <div class="large-12 medium-8 large-offset-0 medium-offset-2 columns">
+            <a href="signup.html" class="button expand">Sign Up</a>
+          </div>
+          <div class="large-12 columns">
+            <h5 class="centered">Or <a>sign in</a> here</h5>
           </div>
         </div>
-        <div class="row">
-          <hr>
-        </div>
-        {{/each}}
       </div>
     </div>
-  </div>
-</script>
-
-<script>
-  var context = JSON.parse(sessionStorage.getItem('data'));
-  loadPage("#home-template", context);
-</script>
+    <div class="large-5 end columns panel mob-space">
+      <div class="row">
+        <div class="large-12 medium-10 large-offset-0 medium-offset-1 columns">
+          <div class="row spaced">
+            <h2 class="home-headers">See What Locals Are Drinking</h2>
+            <hr>
+          </div>
+          {{#each this}}
+          <div class="row">
+            <div class="medium-2 small-3 columns">
+              <img class="img-circle" src="img/{{user}}.jpg">
+            </div>
+            <div class="medium-10 small-9 columns">
+              <div class="row">
+                <div class="info small-12 columns">
+                  {{user}} drank a cup of {{tea}}<br>
+                </div>
+              </div>
+              <div class="row">
+                <div class="small-6 medium-7 columns"
+                  <span>{{starHelper rate}}</span>
+                </div>
+                <div class="small-6 medium-5 columns">
+                  <br>
+                  <plabel class="e-right">{{timeHelper timestamp}}</plabel>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <hr>
+          </div>  
+          {{/each}}
+        </div>
+      </div>
+    </div>
+  </script>
+  
+  <script>
+    var context = JSON.parse(sessionStorage.getItem('data'));
+    loadPage("#tea-template", context.locals);
+  </script>
 </body>
 </html>
