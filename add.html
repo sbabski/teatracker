@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Tea Tracker</title>
+  <script src="scripts/jquery-2.1.4.min.js"></script>
+  <script src="scripts/handlebars-v4.0.2.js"></script>
+  <script src="scripts/helpers.js"></script>
+  <script src="scripts/app.js"></script>
+  <link rel="stylesheet" href="foundation.css" />
+  <script src="scripts/foundation.min.js"></script>
+  <link rel="stylesheet" href="styles.css" />
+  <link href='https://fonts.googleapis.com/css?family=Raleway:400,600,800,200' rel='stylesheet' type='text/css'>
+</head>
+<body>
+  <script id="add-template" type="text/x-handlebars-template">
+    {{> nav}}
+    <div class="row centered spaced">
+      <h1 id="title" class="spaced">Time to drink some tea!</h1>
+    </div>
+
+    <div id="section1">
+      <div class="row centered spaced">
+        <div class="small-10 medium-6 small-centered columns">
+          <div class="row collapse">
+            <div class="small-9 columns">
+              <input id="addSearch" type="text" placeholder="Find another tea to drink" />
+            </div>
+            <div class="small-3 columns">
+              <a id="addSearchButton" href="add.html#" class="button postfix">Search</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="teaInfo" class="row spaced">
+        <div class="small-8 medium-4 small-offset-2 medium-offset-1 columns">
+          <img class="img-spaced" src="img/tea.jpg">
+        </div>
+        <div class="small-10 medium-6 small-centered medium-uncentered columns">
+          <div class="row">
+            <ul class="tabs" data-tab>
+              <li id="tab1" class="tab-title"><a>Information</a></li>
+              <li id="tab2" class="tab-title active hovertab"><a>Instructions</a></li>
+            </ul>
+            <div class="tabs-content">
+              <div class="content active" id="tab1content">
+                <p class="copy"></p>
+              </div>
+              <div class="content" id="tab2content">
+                <p class="copy2"></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row centered">
+        <a id="drink" class="button large">Drink!</a>
+      </div>
+    </div>
+
+    <div id="section2">
+      <div class="row centered">
+        <a><img id="1" class='img-star-large' src='img/star.png'></a>
+        <a><img id="2" class='img-star-large' src='img/star.png'></a>
+        <a><img id="3" class='img-star-large' src='img/star.png'></a>
+        <a><img id="4" class='img-star-large' src='img/star.png'></a>
+        <a><img id="5" class='img-star-large' src='img/star.png'></a>
+      </div>
+      <div class="row spaced">
+        <div class="small-10 medium-8 small-centered columns">
+          <textarea id="review" placeholder="Write your review here" rows="8"></textarea>
+        </div>
+      </div>
+      <div class="row spaced">
+        <div class="small-4 small-offset-2 centered columns">
+          <a id="cancel" class="button secondary large">Cancel</a>
+        </div>
+        <div class="small-4 centered end columns">
+          <a id="submit" class="button large">Submit</a>
+        </div>
+      </div>
+    </div>
+
+  </script>
+  <script>
+    //submission inputs
+    var teaName = "tea";
+    var teaRate = 0;
+    var teaRev = '';
+    
+    var context = JSON.parse(sessionStorage.getItem('data'));
+    loadPage("#add-template", context);
+    $("#nav-add").addClass("active");
+
+    $('#teaInfo').hide();
+    $('#drink').hide();
+    $('#section2').hide();
+
+    //search button
+    $('#addSearchButton').click(function () {
+      var orig = $(this).attr('href');
+      if($.trim($('#addSearch').val()).length > 0) {
+        var ext = $('#addSearch').val();
+        ext = ext.toLowerCase().split(' ').join('-');
+        $(this).attr('href', orig + ext);
+        location.reload();
+      }
+    });
+
+    //set up page if previous input
+    var teaID = window.location.href.split('#')[1].toString();
+    if(teaID.length > 0) {
+      $('#teaInfo').show();
+      $('#drink').show();
+      teaName = teaID.split('-');
+      for(i=0;i<teaName.length;i++) {
+        teaName[i] = teaName[i].charAt(0).toUpperCase() + teaName[i].slice(1);
+      }
+      teaName = teaName.join(" ");
+    }
+    $('#title').text("Time to drink some " + teaName + "!");
+
+    //show ratings section
+    $('#drink').click(function() {
+      $('#section1').hide();
+      $('#section2').show();
+      $('#title').text("Rate & Review your cup of " + teaName);
+    });
+    $('#cancel').click(function() {
+      $('#section1').show();
+      $('#section2').hide();
+      $('#title').text("Time to drink some " + teaName + "!");
+    });
+
+    //stars
+    $('.img-star-large').click(function() {
+      teaRate = parseInt($(this).attr('id'));
+      for(i=1;i<=5;i++) {
+        var temp = '#' + (i).toString();
+        if(i <= teaRate) {
+          $(temp).attr('src', 'img/star-f.png');
+        } else {
+          $(temp).attr('src', 'img/star.png');
+        }
+      }
+    });
+
+    //textarea
+    $('#review').change(function() {
+      teaRev = $('#review').val();
+    });
+
+    //submit
+    $('#submit').click(function() {
+      if($.trim(teaRev.length) > 0 && teaRate > 0) {
+        var tID = context.friends[0].id + 1;
+        var newEntry = {id: tID, user: 'You', tea: teaName, rate: teaRate, review: teaRev, timestamp: [10, 14, 14, 30]};
+        context.friends.splice(0, 0, newEntry);
+        context.users[0].reviews.unshift(tID);
+        //add to own profile
+        var text = JSON.stringify(context);
+        sessionStorage.setItem('data', text);
+        $('#submit').attr('href', 'index.html');
+      }
+    });
+
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Tea Tracker</title>
+  <script src="scripts/jquery-2.1.4.min.js"></script>
+  <script src="scripts/foundation.min.js"></script>
+  <script src="scripts/handlebars-v4.0.2.js"></script>
+  <script src="scripts/helpers.js"></script>
+  <script src="scripts/app.js"></script>
+  <link rel="stylesheet" href="foundation.css" />
+  <link rel="stylesheet" href="styles.css" />
+  <link href='https://fonts.googleapis.com/css?family=Raleway:400,600,800,200' rel='stylesheet' type='text/css'>
+</head>
+<body>
+  <script id="profile-template" type="text/x-handlebars-template">
+    {{> nav}}
+    <div class="row spaced">
+      <div class="small-6 medium-3 medium-offset-3 columns spaced">
+        <img src="img/{{imgHelper name}}.jpg" class="img-circle img-large">
+      </div>
+      <div class="small-6 medium-3 end columns spaced">
+        <h1>{{name}}</h1>
+        <h5><plabel>@</plabel>{{username}}<br>
+        <plabel>born </plabel>{{birthHelper birthday}}<br>
+        <plabel>gender: </plabel>{{gender}}<br>
+        {{reviews.length}}<plabel> reviews</plabel></h5>
+      </div>
+    </div>
+    <div class="row spaced">
+      <div class="small-10 large-12 small-centered columns">
+        <div class="row">
+          <ul class="tabs" data-tab>
+            <li id="tab1" class="tab-title"><a>Favorites</a></li>
+            <li id="tab2" class="tab-title active hovertab"><a>All Reviews</a></li>
+            <li id="tab3" class="tab-title active hovertab"><a>Friends</a></li>
+          </ul>
+          <div class="tabs-content">
+            <div class="content active" id="tab1content">
+              <div class="row centered tcontent">
+                {{#each favorites}}
+                <div class="small-6 medium-4 columns">
+                  <img class="img-tea" src="img/tea.jpg" />
+                  <h4>{{this}}</h4>
+                  <span class="star-span">{{starHelper 4}}</span>
+                </div>
+                {{/each}}
+              </div>
+            </div>
+            <div class="content" id="tab2content">
+              <div class="row centered tcontent">
+              {{#each revList}}
+                <div class="small-6 medium-3 columns">
+                  <img class="img-tea" src="img/tea.jpg" />
+                  {{revTitleHelper this}}
+                </div>
+              {{/each}}
+              </div>
+            </div>
+            <div class="content" id="tab3content">
+              <div class="row centered tcontent">
+              {{#each friends}}
+                <div class="small-6 medium-3 columns">
+                  <a class="reload" href="profile.html#{{this}}">
+                    <img class="img-circle" src="img/{{this}}.jpg" />
+                    <h4>{{this}}</h4>
+                  </a>
+                </div>
+              {{/each}}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </script>
+  <script>
+    var text = '{"users" : [{"name": "You", "birthday" : [0,0,0], "friends": []}, {"name": "Bruce", "type": "local", "username": "bruce", "birthday" : [9,10,1990], "gender" : "male", "favorites": ["Blue Lady", "Ceylon"], "friends" : ["Denis","Randall","Janette","Joseph"], "reviews": [5,101,102,103,104]}, {"name": "Denis", "type": "local", "username": "abcdefghijklmnopquer", "birthday" : [9,10,1990], "gender" : "male", "reviews": [5,101,102,103,104]}]}';
+
+    //var context = JSON.parse(text);
+    var context = JSON.parse(sessionStorage.getItem('data'));
+    var fullContext = JSON.parse(sessionStorage.getItem('data'));
+
+    //load correct profile
+    var proName = window.location.href.split('#')[1].toString();
+    if(proName.length > 0 && !(proName === 'You')) {
+      for(i=0;i<context.users.length;i++) {
+        if(context.users[i].name === proName) {
+          context = context.users[i];
+          break;
+        }
+      }
+    } else {
+      context = context.users[0];
+    }
+
+    //load reviews
+    var revList = []
+    var list = fullContext[context.type.toString()];
+    var real = $.grep(context.reviews, function (n, i) {
+      return n < 100;
+    });
+    for(i=0;i<real.length;i++) {
+      var entry = [list[i].id, list[i].tea, list[i].rate];
+      revList.push(entry);
+    }
+    for(i=real.length;i<context.reviews.length;i++) {
+      var entry = [context.reviews[i], '', 0];
+      revList.push(entry);
+    }
+    context.revList = revList;
+
+    //load page
+    loadPage("#profile-template", context);
+    $("#nav-profile").addClass("active");
+
+    //reload properly
+    $('.reload').click(function () {
+      location.reload();
+    });
+
+    //space items in tabs correctly
+    $('#tab1content .tcontent div:last-child').addClass('end');
+    $('#tab2content .tcontent div:last-child').addClass('end');
+    $('#tab3content .tcontent div:last-child').addClass('end');
+  </script>
+</body>
+</html>

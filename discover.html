@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Tea Tracker</title>
+  <script src="scripts/jquery-2.1.4.min.js"></script>
+  <script src="scripts/foundation.min.js"></script>
+  <script src="scripts/handlebars-v4.0.2.js"></script>
+  <script src="scripts/helpers.js"></script>
+  <script src="scripts/app.js"></script>
+  <link rel="stylesheet" href="foundation.css" />
+  <link rel="stylesheet" href="styles.css" />
+  <link href='https://fonts.googleapis.com/css?family=Raleway:400,600,800,200' rel='stylesheet' type='text/css'>
+</head>
+
+<body>
+<script id="home-template" type="text/x-handlebars-template">
+  {{> nav}}
+  {{> add}}
+
+  <div id="reviews">
+    <div class="row">
+      <div class="large-12 medium-10 medium-centered spaced columns">
+      <div class="row">
+        <h2 class="home-headers">Local Activity</h2>
+        <hr>
+      </div>
+      {{#each locals}}
+        <div class="row">
+          <div class="medium-2 small-3 columns">
+            <a href="profile.html#{{user}}">
+              <img class="img-circle" src="img/{{imgHelper user}}.jpg">
+            </a>
+          </div>
+          <div class="small-9 medium-offset-1 columns">
+            <div class="row">
+              <div class="info small-9 columns">
+                <a href="profile.html#{{user}}">{{user}}</a> drank a cup of {{tea}}<br>
+              </div>
+              <div class="small-3 columns">
+                <div class="e-right">
+                  <a id="{{user}}" class="button secondary radius friend">
+                    <img src="img/add.png" class="img-add">
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="small-6 columns">
+                <span>{{starHelper rate}}</span>
+              </div>
+              <div class="small-6 columns">
+                <br>
+                <plabel class="e-right">{{timeHelper timestamp}}</plabel>
+              </div>
+            </div>
+            <div class="row review centered">
+              <h5 class="heavy">
+                <a id={{id}} class="review-button">Read Review <img class="{{id}} img-arrow" src="img/arrowdown.svg"><img class="{{id}} img-arrow" style="display:none"src="img/arrowup.svg"></a>
+              </h5>
+              <p class="{{id}} copy" style="display:none"></p>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <hr>
+        </div>  
+      {{/each}}
+      </div>
+    </div>
+  </div>
+</script>
+
+<script>
+  var context = JSON.parse(sessionStorage.getItem('data'));
+  loadPage("#home-template", context);
+  $("#nav-discover").addClass("active");
+
+  //add friend to list, remove from local screen
+  $('.friend').one('click', function () {
+    $(this).removeClass('secondary');
+    $(this).addClass('success');
+    for(i=0;i<context.locals.length;i++) {
+      if($(this).attr("id") === context.locals[i].user) {
+        context.locals.splice(i, 1);
+      }
+    }
+    context.users[0].friends.push($(this).attr("id"));
+  });
+  $('.home-headers').click(function () {
+    var text = JSON.stringify(context);
+    console.log(text);
+  });
+  $(window).on('beforeunload', function() {
+    var text = JSON.stringify(context);
+    sessionStorage.setItem('data', text);
+    console.log(text);
+  });
+  console.log(context.users[0]);
+</script>
+</body>
+</html>

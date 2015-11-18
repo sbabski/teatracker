@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Tea Tracker</title>
+  <script src="scripts/jquery-2.1.4.min.js"></script>
+  <script src="scripts/foundation.min.js"></script>
+  <script src="scripts/handlebars-v4.0.2.js"></script>
+  <script src="scripts/helpers.js"></script>
+  <script src="scripts/app.js"></script>
+  <link rel="stylesheet" href="foundation.css" />
+  <link rel="stylesheet" href="styles.css" />
+  <link href='https://fonts.googleapis.com/css?family=Raleway:400,600,800,200' rel='stylesheet' type='text/css'>
+</head>
+
+<body>
+  <script id="signup-template" type="x-handlebars-template">
+    <div class="top-space"></div>
+    <div class="row centered">
+      <h1>Sign Up For TeaTracker</h1>
+    </div>
+    <div class="row spaced">
+      <div class="large-6 medium-8 medium-centered columns">
+        <form id="form1">
+          <div class="row">
+            <div class="medium-6 columns">
+              <input type="text" id="fname" placeholder="First Name" class="f1" />
+            </div>
+            <div class="medium-6 columns">
+              <input type="text" id="lname" placeholder="Last Name" class="f1" />
+            </div>
+          </div>
+          <div class="row">
+            <div class="medium-12 columns">
+              <input type="text" id="uname" placeholder="Username" class="f1" />
+            </div>
+          </div>
+          <div class="row">
+            <div class="medium-12 columns">
+              <input type="text" placeholder="Email" class="f1" />
+            </div>
+          </div>
+          <div class="row">
+            <div class="medium-6 columns">
+              <input type="password" id="fname" placeholder="Password" class="f1" />
+            </div>
+            <div class="medium-6 columns">
+              <input type="password" id="lname" placeholder="Repeat Password" class="f1" />
+            </div>
+          </div>
+          <div class="row">
+            <div class="medium-12 columns spaced">
+              <a id="form1submit" class="button radius expand">
+                Sign Up
+              </a>
+            </div>
+          </div>
+          <div class="row">
+            <div class="medium-12 columns">
+              <p class="secondary-text">
+                By signing up, you agree to the Terms of Service and Privacy Policy.
+              </p>
+            </div>
+          </div>    
+        </form>
+        <form id="form2" style="display:none">
+          <h2 class="home-headers">
+            Set Up Your Profile
+          </h2>
+          <hr>
+          <div class="row spaced">
+            <div class="medium-6 columns">
+              <div class="row">
+                <div class="panel img-choose">
+                </div>
+              </div>
+              <div class="row centered">
+                <a class="button tiny">
+                  Upload Image
+                </a>
+              </div>
+            </div>
+            <div class="medium-6 columns">
+              <div class="row">
+                <br>
+                <div class="large-12 columns">
+                  <input type="text" id="bday" placeholder="Birthday (mm/dd/yyyy)" class="f2" />
+                </div>
+              </div>
+              <div class="row">
+                <div class="large-12 columns">
+                  <input type="text" id="gend" placeholder="Gender" class="f2" />
+                </div>
+              </div>
+              <div class="row">
+                <div class="large-12 columns">
+                  <input id="p-checkbox" type="checkbox" />
+                  <label for="p-checkbox">Make profile private</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="large-12 columns">
+              <div class="row collapse">
+                <div class="row spaced">
+                  <label>Choose Up to 3 favorite teas:</label>
+                </div>
+                <div class="small-9 columns">
+                  <input id="fav-search" type="text" placeholder="Search for tea" />
+                </div>
+                <div class="small-3 columns">
+                  <a id="fav-button" class="button postfix">Go</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="medium-10 medium-centered columns">
+              <table id="favorites">
+                <tr id="1">
+                  <td></td>
+                </tr>
+                <tr id="2">
+                  <td></td>
+                </tr>
+                <tr id="3">
+                  <td></td>
+                </tr>
+              </table>
+            </div>
+          </div>
+          <div class="row">
+            <div class="medium-6 columns spaced">
+              <a id="back" class="button radius expand secondary">
+                Go Back
+              </a>
+            </div>
+            <div class="medium-6 columns spaced">
+              <a href="#" id="form2submit" class="button radius expand">
+                Submit
+              </a>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </script>
+  <script>
+    var context = JSON.parse(sessionStorage.getItem('data'));
+    loadPage("#signup-template", context);
+    var favlen = 0;
+    var newEntry = {"name": "", "type": "friends", "username": "", "birthday": [], "gender": "", "favorites": [], "friends": [], "reviews": []};
+
+    function formSubmit(form, todo) {
+      $(form).removeClass('error');
+      $('small').remove();
+      for(i=0;i<$(form).length;i++) {
+        var inp = $(form)[i];
+        if($.trim(inp.value).length === 0) {
+          $(form).addClass('error');
+          $("<small class='error'>Invalid Entry</small>").insertAfter(inp);
+        }
+      }
+      if(!$(form).hasClass('error')) {
+        todo();
+      }
+    }
+
+    $('#form1submit').click(function () {
+      formSubmit('.f1', function() {
+        newEntry.name = $('#fname').val();
+        newEntry.username = $('#uname').val();
+        $('#form1').hide();
+        $('#form2').show();
+      });
+    });
+
+    $('#back').click(function () {
+      $('#form1').show();
+      $('#form2').hide();
+    });
+    $('#fav-button').click(function () {
+      var fav = $('#fav-search').val();
+      if($.trim(fav).length > 0) {
+        if(favlen < 3) {
+          console.log(fav);
+          $('#favorites #' + (favlen + 1) + " td").html(fav);
+          $('#fav-search').val('');
+          favlen++;
+        } else {
+          $('#favorites').addClass('error');
+          $("<small class='error'>Only three favorites can be chosen</small>").insertAfter($('#favorites'));
+        }
+      }
+    });
+
+    $('#form2submit').click(function () {
+      var birth = $('#bday').val().split('/');
+      if(birth.length != 3 || birth[0].length != 2 || birth[1].length != 2 || birth[2].length != 4) {
+        $('#bday').addClass('error');
+        $("<small class='error'>Invalid Entry</small>").insertAfter($('#bday'));
+      } else {
+        formSubmit('.f2', function() {
+          var favArr = [];
+          for(i=0;i<favlen;i++) {
+            favArr.push($('#favorites tr td').eq(i).text());
+          }
+          newEntry.birthday = birth;
+          newEntry.gender = $('#gend').val();
+          newEntry.favorites = favArr;
+
+          context.users[0] = newEntry;
+          var text = JSON.stringify(context);
+          sessionStorage.setItem('data', text);
+          $('#form2submit').attr('href', 'discover.html');
+        });
+      }
+    });
+
+  </script>
+</body>
+</html>

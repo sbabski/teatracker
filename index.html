@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Tea Tracker</title>
+  <script src="scripts/jquery-2.1.4.min.js"></script>
+  <script src="scripts/foundation.min.js"></script>
+  <script src="scripts/handlebars-v4.0.2.js"></script>
+  <script src="scripts/helpers.js"></script>
+  <script src="scripts/app.js"></script>
+  <link rel="stylesheet" href="foundation.css" />
+  <link rel="stylesheet" href="styles.css" />
+  <link href='https://fonts.googleapis.com/css?family=Raleway:400,600,800,200' rel='stylesheet' type='text/css'>
+</head>
+
+<body>
+<script id="home-template" type="text/x-handlebars-template">
+  {{> nav}}
+  {{> add}}
+
+  <div id="reviews">
+    <div class="row">
+      <div class="large-12 medium-10 medium-centered spaced columns">
+        <div class="row">
+          <h2 class="home-headers">Recent Activity</h2>
+          <hr>
+        </div>
+        {{#each friends}}
+        <div class="row">
+          <div class="medium-2 small-3 columns">
+            <a href="profile.html#{{user}}">
+              <img class="img-circle" src="img/{{imgHelper user}}.jpg">
+            </a>
+          </div>
+          <div class="small-9 medium-offset-1 columns">
+            <div class="row">
+              <div class="info small-12 columns">
+                <a href="profile.html#{{user}}">{{user}}</a> drank a cup of {{tea}}<br>
+              </div>
+            </div>
+            <div class="row">
+              <div class="small-6 columns">
+                <span>{{starHelper rate}}</span>
+              </div>
+              <div class="small-6 columns">
+                <br>
+                <plabel class="e-right">{{timeHelper timestamp}}</plabel>
+              </div>
+            </div>
+            <div class="row review centered">
+              <h5 class="heavy">
+                <a id={{id}} class="review-button">Read Review <img class="{{id}} img-arrow" src="img/arrowdown.svg"><img class="{{id}} img-arrow" style="display:none"src="img/arrowup.svg"></a>
+              </h5>
+              <p class="rev-text {{id}}" style="display:none">{{revHelper review}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <hr>
+        </div>
+        {{/each}}
+      </div>
+    </div>
+  </div>
+</script>
+
+<script>
+  var context = JSON.parse(sessionStorage.getItem('data'));
+  loadPage("#home-template", context);
+</script>
+</body>
+</html>

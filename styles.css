@@ -1,0 +1,159 @@
+body, h1, h2, h3, h4, h5, h6{
+  font-family: Raleway, Arial, Helvetica, sans-serif;
+}
+.top-bar-section ul li > a {
+  font-family: Raleway, Arial, Helvetica, sans-serif;
+}
+#add-partial {
+  margin-top: 5rem;
+  margin-bottom: 3rem;
+}
+.button-add {
+  font-size: 0.875rem;
+  padding: .7rem 2rem;
+}
+.friend {
+  padding: .5rem;
+  margin-left: 2rem;
+  margin-bottom: 0;
+}
+.centered {
+  text-align: center;
+}
+.copy {
+  text-align: left;
+}
+.date {
+  margin-top: -3rem;
+}
+.e-right {
+  float: right;
+}
+#error {
+  position: absolute;
+  width: 50%;
+  left: 25%;
+  height: 40%;
+  top: 30%;
+}
+#favorites {
+  width: 100%;
+}
+tr {
+  height: 2rem;
+}
+.heavy {
+  font-weight: 600;
+}
+.home-headers{
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: .2rem;
+  font-size: 1.25rem;
+}
+hr {
+  margin: 1rem 0;
+  clear: both;
+}
+.img-add {
+  height: 1.5rem;
+  margin: 0;
+}
+.img-arrow {
+  height: 1rem;
+  margin-left: .5rem;
+}
+.img-choose {
+  height: 7.5rem;
+  width: 7.5rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+.img-circle {
+  border-radius: 50%;
+}
+.img-large {
+  height: 12rem;
+}
+.img-spaced {
+  margin-bottom: 3rem;
+}
+.img-star {
+  height: 2rem;
+  margin: 1rem 0;
+}
+.img-star-large {
+  height: 4rem;
+  margin: 1rem 0;
+}
+.img-tea {
+  height: 7rem;
+  width: 7rem;
+  border-radius: 50%;
+}
+.info {
+  font-size: 1.1rem;
+}
+.tabs .tab-title a:hover {
+  background-color: #efefef;
+}
+.tabs .tab-title.active a:hover {
+  background-color: #dedede;
+}
+#nav-search {
+  padding: 0;
+}
+.offset {
+  margin-top: .5rem;
+}
+plabel {
+  color: #6f6f6f;
+}
+.review {
+  padding: 0 1rem;
+}
+.review-button {
+  color: #000;
+}
+.review-button:hover {
+  color: #000;
+}
+.rev-text {
+  text-align: left;
+}
+.secondary-text {
+  font-size: 0.875rem;
+  color: #4d4d4d;
+}
+.spaced {
+  margin-top: 2rem;
+}
+.super {
+  font-size: 5rem;
+}
+.tabs-content {
+  background-color: #efefef;
+  padding:.5rem 1.75rem;
+}
+textarea {
+  height: auto;
+}
+.top-space {
+  height: 10%;
+}
+
+@media only screen and (max-width: 64em) {
+  .mob-space {
+    margin-top: 10%;
+  }
+  .home-headers {
+    margin-left: 1rem;
+  }
+  hr {
+    margin-left: 1rem;
+    margin-right: 1rem;
+  }
+  .e-right {
+    font-size: .875rem;
+  }
+}
