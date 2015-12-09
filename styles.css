@@ -1,5 +1,16 @@
-body, h1, h2, h3, h4, h5, h6{
+body, h1, h2, h3, h4, h5, h6, .tabs dd > a, .tabs .tab-title > a{
   font-family: Raleway, Arial, Helvetica, sans-serif;
+  color: #522C00;
+}
+.copy, .copy2, #review, .rev-text {
+  font-family: 'Open-Sans', sans-serif;
+  text-align: left;
+}
+body {
+  background-image: url('img/green_cup.png');
+}
+a , a:hover {
+  color: #8B4A00;
 }
 .top-bar-section ul li > a {
   font-family: Raleway, Arial, Helvetica, sans-serif;
@@ -12,6 +23,10 @@ body, h1, h2, h3, h4, h5, h6{
   font-size: 0.875rem;
   padding: .7rem 2rem;
 }
+.button .friend {
+  opacity: 0.5;
+  border-radius: 10px;
+}
 .friend {
   padding: .5rem;
   margin-left: 2rem;
@@ -19,9 +34,6 @@ body, h1, h2, h3, h4, h5, h6{
 }
 .centered {
   text-align: center;
-}
-.copy {
-  text-align: left;
 }
 .date {
   margin-top: -3rem;
@@ -52,6 +64,9 @@ tr {
   font-size: 1.25rem;
 }
 hr {
+  border: solid #8B6436;
+  border-width: 1px 0 0;
+  color: #8B6436;
   margin: 1rem 0;
   clear: both;
 }
@@ -94,11 +109,19 @@ hr {
 .info {
   font-size: 1.1rem;
 }
+input#nav-search, input#addSearch {
+  border: 1px solid;
+  border-color: transparent;
+  border-radius: 10px 0 0 10px;
+}
 .tabs .tab-title a:hover {
   background-color: #efefef;
 }
 .tabs .tab-title.active a:hover {
   background-color: #dedede;
+}
+textarea#review {
+  border-radius: 10px;
 }
 #nav-search {
   padding: 0;
@@ -106,17 +129,22 @@ hr {
 .offset {
   margin-top: .5rem;
 }
+.panel {
+  border: solid #8B6436;
+  border-width: 0;
+  background-color: rgba(200, 200, 200, 0.2);
+}
 plabel {
-  color: #6f6f6f;
+  color: #8B6436;
 }
 .review {
   padding: 0 1rem;
 }
 .review-button {
-  color: #000;
+  color: #522B00;
 }
 .review-button:hover {
-  color: #000;
+  color: #522B00;
 }
 .rev-text {
   text-align: left;
@@ -132,7 +160,7 @@ plabel {
   font-size: 5rem;
 }
 .tabs-content {
-  background-color: #efefef;
+  background-color: rgba(200, 200, 200, 0.2);
   padding:.5rem 1.75rem;
 }
 textarea {
@@ -141,6 +169,58 @@ textarea {
 .top-space {
   height: 10%;
 }
+.tabs dd.active a, .tabs .tab-title.active a {
+    background-color: transparent;
+    color: #8B6436;
+}
+button, .button {
+  background: rgba(46, 80, 18, 0.5);
+  border: 1px solid;
+  border-color: transparent;
+  border-radius:10px;
+}
+button:hover, .button:hover {
+  background-color: #2E5012;
+}
+button.postfix, .button.postfix {
+  border-radius: 0 10px 10px 0;
+}
+button.success:hover, button.success:focus, .button.success:hover, .button.success:focus {
+  background-color: #2E5012;
+}
+button.success, .button.success {
+  background: rgba(46, 80, 18, 0.5);
+  border-color: #368a55;
+  color: #FFFFFF;
+}
+select#selectFav {
+  border: 1px solid;
+  border-color: transparent;
+  border-radius: 10px 0 0 10px;
+}
+.top-bar-section .has-form {
+  background: transparent;
+  color: transparent;
+}
+.top-bar {
+  background: rgba(46, 80, 18, 1);
+}
+@media only screen and (min-width: 40.0625em) {
+  .top-bar-section li:not(.has-form)   a:not(.button) {
+    background: rgba(46, 80, 18, 1);
+  }
+  .top-bar-section li.active:not(.has-form) a:not(.button) {
+    background: rgba(46, 80, 18, 0.7);
+  }
+}
+.tabs dd > a, .tabs .tab-title > a , .tabs dd > a:hover, .tabs .tab-title > a:hover{
+  background-color: rgba(200, 200, 200, 0.2);
+}
+
+.mob-space {
+  background-color: rgba(200, 200, 200, 0.2);
+}
+
 
 @media only screen and (max-width: 64em) {
   .mob-space {
@@ -150,8 +230,11 @@ textarea {
     margin-left: 1rem;
   }
   hr {
-    margin-left: 1rem;
-    margin-right: 1rem;
+    border: solid #8B6436;
+    border-width: 1px 0 0;
+    color: #8B6436;
+    margin: 1rem 0;
+    clear: both;
   }
   .e-right {
     font-size: .875rem;

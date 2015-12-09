@@ -1,17 +1,16 @@
-figure out a better way to store partials
-host on github
+structural:
+index panel clickable considerations
+popular teas on add cup page
+move from discover to home page when added as friend
+add as friend on profile page
+own profile not visible after add tea (needs id?)
+Sort profiles not appearing for local
 
-ADD FRIENDS AND FAVORITES ON PROFILE JSON
-FIX WEIRDNESS WITH INITIAL LOADING
-ADD PARTIAL MAKE IT WORK WITH ACTUAL FAVORITES nope
+visual:
+finish logo
+redo icons
+overlay tea and propic icons
 
-PROFILE PAGE:
-  reviews
-
-ADD PAGE !!!DONE!!!
-SIGNUP PAGE !!!DONE!!!
-SPLASH PAGE !!!DONE!!!
-404 PAGE !!!DONE!!!
-HOME PAGE !!!DONE!!!
-
-MAKE THINGS RESPONSIVE !!!DONE!!!
+simple styling:
+header opacity
+refine green/text color -> more warmth
