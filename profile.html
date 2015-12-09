@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="foundation.css" />
   <link rel="stylesheet" href="styles.css" />
   <link href='https://fonts.googleapis.com/css?family=Raleway:400,600,800,200' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 </head>
 <body>
   <script id="profile-template" type="text/x-handlebars-template">
@@ -101,7 +102,13 @@
       return n < 100;
     });
     for(i=0;i<real.length;i++) {
-      var entry = [list[i].id, list[i].tea, list[i].rate];
+      var k = 0;
+      for(j=0;j<list.length;j++) {
+        if(real[i] == list[j].id) {
+          k = list[j].id;
+        }
+      }
+      var entry = [list[k].id, list[k].tea, list[k].rate];
       revList.push(entry);
     }
     for(i=real.length;i<context.reviews.length;i++) {
