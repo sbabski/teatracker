@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Tea Tracker</title>
+  <title>TeaTracker</title>
+  <link rel="icon" href='img/icon.png'>
   <script src="scripts/jquery-2.1.4.min.js"></script>
   <script src="scripts/foundation.min.js"></script>
   <script src="scripts/handlebars-v4.0.2.js"></script>
@@ -13,6 +14,7 @@
   <link href='https://fonts.googleapis.com/css?family=Raleway:400,600,800,200' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 </head>
+
 <body>
   <script id="profile-template" type="text/x-handlebars-template">
     {{> nav}}
@@ -20,8 +22,18 @@
       <div class="small-6 medium-3 medium-offset-3 columns spaced">
         <img src="img/{{imgHelper name}}.jpg" class="img-circle img-large">
       </div>
-      <div class="small-6 medium-3 end columns spaced">
-        <h1>{{name}}</h1>
+      <div class="small-6 medium-4 end columns spaced">
+        <div class='row profile'>
+          <div class='large-5 columns'>
+            <h1>{{name}}</h1>
+          </div>
+          <div class='large-7 columns'>
+            <a id="{{user}}" class="button secondary friend profile">
+              <img src="img/add.png" class="img-add">
+              <span class='button-text'>Add Friend</span>
+            </a>
+          </div>
+        </div>
         <h5><plabel>@</plabel>{{username}}<br>
         <plabel>born </plabel>{{birthHelper birthday}}<br>
         <plabel>gender: </plabel>{{gender}}<br>
@@ -76,9 +88,6 @@
     </div>
   </script>
   <script>
-    var text = '{"users" : [{"name": "You", "birthday" : [0,0,0], "friends": []}, {"name": "Bruce", "type": "local", "username": "bruce", "birthday" : [9,10,1990], "gender" : "male", "favorites": ["Blue Lady", "Ceylon"], "friends" : ["Denis","Randall","Janette","Joseph"], "reviews": [5,101,102,103,104]}, {"name": "Denis", "type": "local", "username": "abcdefghijklmnopquer", "birthday" : [9,10,1990], "gender" : "male", "reviews": [5,101,102,103,104]}]}';
-
-    //var context = JSON.parse(text);
     var context = JSON.parse(sessionStorage.getItem('data'));
     var fullContext = JSON.parse(sessionStorage.getItem('data'));
 
@@ -96,20 +105,18 @@
     }
 
     //load reviews
-    var revList = []
+    var revList = [];
     var list = fullContext[context.type.toString()];
     var real = $.grep(context.reviews, function (n, i) {
       return n < 100;
     });
     for(i=0;i<real.length;i++) {
-      var k = 0;
       for(j=0;j<list.length;j++) {
         if(real[i] == list[j].id) {
-          k = list[j].id;
+          var entry = [list[j].id, list[j].tea, list[j].rate];
+          revList.push(entry);
         }
       }
-      var entry = [list[k].id, list[k].tea, list[k].rate];
-      revList.push(entry);
     }
     for(i=real.length;i<context.reviews.length;i++) {
       var entry = [context.reviews[i], '', 0];
@@ -130,6 +137,32 @@
     $('#tab1content .tcontent div:last-child').addClass('end');
     $('#tab2content .tcontent div:last-child').addClass('end');
     $('#tab3content .tcontent div:last-child').addClass('end');
+
+    //add friend button for locals
+    if(context.type.toString() != 'locals' || $.inArray(proName, fullContext.users[0].friends) >= 0) { 
+      $('.friend').hide();
+    } else { 
+      $('.friend').show(); 
+    }
+    //add friend to list, remove from local screen
+    $('.friend').one('click', function() {
+      $(this).removeClass('secondary');
+      $(this).addClass('success');
+      $('.button-text').text('Added');
+      for(i=0;i<fullContext.locals.length;i++) {
+        if(proName == fullContext.locals[i].user) {
+          fullContext.locals.splice(i, 1);
+        }
+      }
+      //remove from locals list
+      fullContext.users[0].friends.push(proName);
+      $(window).on('beforeunload', function() {
+        var text = JSON.stringify(fullContext);
+        sessionStorage.setItem('data', text);
+      });
+    });
+
+
   </script>
 </body>
 </html>

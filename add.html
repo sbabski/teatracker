@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Tea Tracker</title>
+  <title>TeaTracker</title>
+  <link rel="icon" href='img/icon.png'>
   <script src="scripts/jquery-2.1.4.min.js"></script>
   <script src="scripts/handlebars-v4.0.2.js"></script>
   <script src="scripts/helpers.js"></script>
@@ -13,6 +14,7 @@
   <link href='https://fonts.googleapis.com/css?family=Raleway:400,600,800,200' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 </head>
+
 <body>
   <script id="add-template" type="text/x-handlebars-template">
     {{> nav}}
@@ -33,9 +35,59 @@
           </div>
         </div>
       </div>
+      <div id="search-helpers" class='row spaced'>
+        <div class="large-9 medium-10 medium-centered columns end">
+          <div class='panel'>
+          <h2 class="home-headers">Drink a Favorite Tea</h2>
+          <hr>
+          <div class="row centered" style>
+            <div class="small-6 medium-4 columns">
+              <a class='new-tea' href="add.html#darjeeling">
+                <img class="img-tea" src="img/tea.jpg" />
+              </a>
+              <h4>Darjeeling</h4>
+            </div>
+            <div class="small-6 medium-4 columns">
+              <a class='new-tea' href="add.html#english-breakfast">
+                <img class="img-tea" src="img/tea.jpg" />
+              </a>
+              <h4>English Breakfast</h4>
+            </div>
+            <div class="small-6 medium-4 columns end">
+              <a class='new-tea' href="add.html#gunpowder-mint">
+                <img class="img-tea" src="img/tea.jpg" />
+              </a>
+              <h4>Gunpowder Mint</h4>
+            </div>
+          </div>
+          </div>
+          <h2 class="home-headers spaced">Try a Popular Tea</h2>
+          <hr>
+          <div class="row centered" style>
+            <div class="small-6 medium-4 columns">
+              <a class='new-tea' href="add.html#chamomile">
+                <img class="img-tea" src="img/tea.jpg" />
+              </a>
+              <h4>Chamomile</h4>
+            </div>
+            <div class="small-6 medium-4 columns">
+              <a class='new-tea' href="add.html#sencha">
+                <img class="img-tea" src="img/tea.jpg" />
+              </a>
+              <h4>Sencha</h4>
+            </div>
+            <div class="small-6 medium-4 columns end">
+              <a class='new-tea' href="add.html#silver-needle">
+                <img class="img-tea" src="img/tea.jpg" />
+              </a>
+              <h4>Silver Needle</h4>
+            </div>
+          </div>
+        </div>
+      </div>
       <div id="teaInfo" class="row spaced">
         <div class="small-8 medium-4 small-offset-2 medium-offset-1 columns">
-          <img class="img-spaced" src="img/tea.jpg">
+          <img class="img-spaced img-tealarge" src="img/tea.jpg" style='margin-top: 3.5rem'>
         </div>
         <div class="small-10 medium-6 small-centered medium-uncentered columns">
           <div class="row">
@@ -98,7 +150,7 @@
     $('#section2').hide();
 
     //search button
-    $('#addSearchButton').click(function () {
+    $('#addSearchButton').click(function() {
       var orig = $(this).attr('href');
       if($.trim($('#addSearch').val()).length > 0) {
         var ext = $('#addSearch').val();
@@ -108,11 +160,17 @@
       }
     });
 
+    //choose a tea from the favorites/popular lists
+    $('.new-tea').click(function() {
+      location.reload();
+    });
+
     //set up page if previous input
     var teaID = window.location.href.split('#')[1].toString();
     if(teaID.length > 0) {
       $('#teaInfo').show();
       $('#drink').show();
+      $('#search-helpers').hide();
       teaName = teaID.split('-');
       for(i=0;i<teaName.length;i++) {
         teaName[i] = teaName[i].charAt(0).toUpperCase() + teaName[i].slice(1);
