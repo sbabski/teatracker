@@ -1,16 +1,25 @@
 structural:
-index panel clickable considerations
-popular teas on add cup page
 move from discover to home page when added as friend
-add as friend on profile page
-own profile not visible after add tea (needs id?)
-Sort profiles not appearing for local
+	probably not doing this one
 
 visual:
 finish logo
-redo icons
-overlay tea and propic icons
 
-simple styling:
-header opacity
-refine green/text color -> more warmth
+final responsive check:
+error DONE
+index
+signup DONE
+timeline DONE
+discovery DONE
+profile DONE
+drink DONE
+
+
+
+writeup:
+specify that once signed up, timeline is filled with users
+to show what it would look like if the user had friends.
+in reality, it wouldn't be like that.
+
+if make it too small on mobile, it looks weird, due to 
+image resizings. ideal mobile size on screenshots

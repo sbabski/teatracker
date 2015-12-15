@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Tea Tracker</title>
+  <title>TeaTracker</title>
+  <link rel="icon" href='img/icon.png'>
   <script src="scripts/jquery-2.1.4.min.js"></script>
   <script src="scripts/foundation.min.js"></script>
   <script src="scripts/handlebars-v4.0.2.js"></script>
@@ -28,19 +29,29 @@
       </div>
       {{#each locals}}
         <div class="row">
-          <div class="medium-2 small-3 columns">
-            <a href="profile.html#{{user}}">
-              <img class="img-circle" src="img/{{imgHelper user}}.jpg">
+          <div class="small-3 columns">
+            <div class="row" style='position:relative;height:128px'>
+              <div class="small-12 columns">
+                <a href="profile.html#{{user}}">
+                  <img class="img-circle" src="img/{{imgHelper user}}.jpg">
+                </a>
+              </div>
+              <div class="small-8 columns" style='position:absolute;bottom:0;right:0'>
+                <a href="add.html#{{tea}}" style='vertical-align:bottom'>
+                  <img class="img-teaoverlay" src='img/tea.jpg'>
+                </a>
+              </div>
             </a>
+            </div>
           </div>
-          <div class="small-9 medium-offset-1 columns">
+          <div class="small-9 columns">
             <div class="row">
               <div class="info small-9 columns">
                 <a href="profile.html#{{user}}">{{user}}</a> drank a cup of {{tea}}<br>
               </div>
               <div class="small-3 columns">
                 <div class="e-right">
-                  <a id="{{user}}" class="button secondary radius friend">
+                  <a id="{{user}}" class="button secondary friend">
                     <img src="img/add.png" class="img-add">
                   </a>
                 </div>
@@ -88,16 +99,10 @@
     }
     context.users[0].friends.push($(this).attr("id"));
   });
-  $('.home-headers').click(function () {
-    var text = JSON.stringify(context);
-    console.log(text);
-  });
   $(window).on('beforeunload', function() {
     var text = JSON.stringify(context);
-    sessionStorage.setItem('data', text);
-    console.log(text);
+    sessionStorage.setItem('data', text);;
   });
-  console.log(context.users[0]);
 </script>
 </body>
 </html>

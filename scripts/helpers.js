@@ -46,26 +46,19 @@ Handlebars.registerHelper('revTitleHelper', function (entry) {
       rate = 4;
       break;
     case 102:
-      //out = out + "Apple & Ginger";
       out = out + "Apple & Ginger";
       rate = 2;
       break;
     case 103:
-      //out = out + "Chamomile";
       out = out + "Chamomile";
       rate = 3;
       break;
     case 104:
       out = out + "English Breakfast";
-      //out = out + "English Breakfast";
       rate = 3;
       break;
-    case 105:
-      out = out + "Lemon Verbena";
-      //out = out + "Lemon Verbena";
     default:
       out = out + name;
-      //out = out + "no";
   }
   out = out + "</h4> <span class='star-span'>" + Handlebars.helpers.starHelper(rate) + "</span></div>";
   return new Handlebars.SafeString(out);

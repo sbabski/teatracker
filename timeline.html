@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Tea Tracker</title>
+  <title>TeaTracker</title>
+  <link rel="icon" href='img/icon.png'>
   <link rel="stylesheet" href="foundation.css" />
   <link rel="stylesheet" href="styles.css" />
   <link href='https://fonts.googleapis.com/css?family=Raleway:400,600,800,200' rel='stylesheet' type='text/css'>
@@ -28,12 +29,22 @@
         </div>
         {{#each friends}}
         <div class="row">
-          <div class="medium-2 small-3 columns">
-            <a href="profile.html#{{user}}">
-              <img class="img-circle" src="img/{{imgHelper user}}.jpg">
+          <div class="small-3 columns">
+            <div class="row" style='position:relative;height:128px'>
+              <div class="small-12 columns">
+                <a href="profile.html#{{user}}">
+                  <img class="img-circle" src="img/{{imgHelper user}}.jpg">
+                </a>
+              </div>
+              <div class="small-8 columns" style='position:absolute;bottom:0;right:0'>
+                <a href="add.html#{{tea}}" style='vertical-align:bottom'>
+                  <img class="img-teaoverlay" src='img/tea.jpg'>
+                </a>
+              </div>
             </a>
+            </div>
           </div>
-          <div class="small-9 medium-offset-1 columns">
+          <div class="small-9 columns">
             <div class="row">
               <div class="info small-12 columns">
                 <a href="profile.html#{{user}}">{{user}}</a> drank a cup of {{tea}}<br>
